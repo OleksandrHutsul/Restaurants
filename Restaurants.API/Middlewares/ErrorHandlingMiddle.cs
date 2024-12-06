@@ -18,6 +18,11 @@ public class ErrorHandlingMiddle(ILogger<ErrorHandlingMiddle> logger) : IMiddlew
 
             logger.LogWarning(notFound.Message);
         }
+        catch (ForbidExeption)
+        {
+            context.Response.StatusCode = 403;
+            await context.Response.WriteAsync("Access forbidden");
+        }
         catch (Exception ex)
         {
             logger.LogError(ex, ex.Message);
